@@ -43,13 +43,11 @@ const defaultInit = {
  */
 const defaultTimeout: number = 10 * 1000;
 function fetchTimeout(time: number = defaultTimeout): Promise<Response> {
-  const response = new Response(
-    JSON.stringify({
-      code: 408,
-      msg: '超时，请稍后再试',
-      result: null
-    })
-  );
+  const response = new Response(JSON.stringify({
+    code: 408,
+    msg: '超时，请稍后再试',
+    result: null
+  }));
 
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -91,7 +89,8 @@ export function fetchParamParser(
 
   // query string
   if (['GET', 'DELETE'].includes(method) && init && init.body) {
-    const query = stringify(init.body);
+    // const query = stringify(init.body);
+    const query = 'xx=2';
 
     url = url.includes('?') ? `${url}&${query}` : `${url}?${query}`;
   }

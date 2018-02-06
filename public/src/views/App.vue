@@ -10,7 +10,7 @@
         <nav>
           <ul class="side">
             <li>
-              <router-link class="tab" :to="{name:'userManage',query:{pid:pid}}" :class="{'tab-active':activeTab === 'userManage'}">
+              <router-link class="tab" :to="{name:'errorlist'}">
                 <span>JS Error分析</span>
               </router-link>
             </li>
@@ -26,7 +26,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-
+import '../styles/common.scss';
 @Component
 export default class App extends Vue {}
 </script>

@@ -16,10 +16,6 @@
       ]
     },
     "target": "es2017",
-    "types": [
-      "node",
-      "webpack-env"
-    ],
     "lib": [
       "dom",
       "es2017"

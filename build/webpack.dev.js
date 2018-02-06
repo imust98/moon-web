@@ -21,12 +21,12 @@ module.exports = () => {
       }
     },
     plugins: [
-      new StylelintPlugin({
-        files: [
-          'public/**/*.vue',
-          'public/**/*.scss'
-        ]
-      }),
+      // new StylelintPlugin({
+      //   files: [
+      //     'public/**/*.vue',
+      //     'public/**/*.scss'
+      //   ]
+      // }),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(process.env.NODE_ENV)
