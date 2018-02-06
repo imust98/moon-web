@@ -1,0 +1,112 @@
+.g-doc {
+    height: 100%;
+    width: 100%;
+  }
+  .g-head {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    background-color: $head-background-color;
+    border-bottom: 1px solid $border-base-color;
+    .title {
+      padding-left: 30px;
+      font-size: 20px;
+      line-height: 60px;
+      color: $text-white-color;
+    }
+    .userInfo {
+      padding-right: 30px;
+      font-size: 16px;
+      line-height: 60px;
+      color: $primary-color;
+    }
+  }
+  
+  .g-body {
+    display: flex;
+    min-height: calc(100% - 60px);
+  }
+  
+  .g-side {
+    width: 200px;
+    color: $text-white-color;
+    background: $side-background-color;
+    min-width: 200px;
+    .side {
+      .tab {
+        display: block;
+        padding: 1rem 2rem;
+        font-size: 14px;
+        color: $text-white-color;
+        &:hover,
+        &.tab-active {
+          background: $side-checked-color;
+        }
+      }
+    }
+  }
+  
+  .g-main {
+    flex: 1;
+    min-width: 800px;
+    padding-left: 20px;
+    background-color: $main-background-color;
+  }
+  
+  .m-main {
+    padding: 20px;
+    height: calc(100% - 40px);
+    background: $text-white-color;
+    h1 {
+      font-size: 16px;
+      padding-bottom: 20px;
+    }
+  }
+  
+  .m-form {
+    .form-item {
+      margin-bottom: 20px;
+    }
+    .label {
+      display: inline-block;
+      text-align: right;
+      vertical-align: middle; // float: left;
+      font-size: 14px;
+      color: $text-color;
+      line-height: 40px;
+      padding: 0 12px 0 0;
+      box-sizing: border-box;
+    }
+    .field {
+      display: inline-block;
+      vertical-align: top;
+      line-height: 40px;
+      position: relative;
+    }
+    &-inline {
+      .form-item {
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 10px;
+        &::before {
+          display: table;
+          content: '';
+        }
+        .label {
+          float: left;
+        }
+        .field {
+          display: flex;
+        }
+      }
+      .field-input {
+        display: inline-block;
+        width: 150px;
+      }
+      .field-line {
+        width: 30px;
+        text-align: center;
+      }
+    }
+  }
+  
