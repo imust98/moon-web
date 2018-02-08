@@ -4,4 +4,8 @@
 node_modules
 npm-debug.log
 dist
+# mock 文件
+mock.data
+nei.25882.5a521f440b88aef909e919e8862bf965
+
 
