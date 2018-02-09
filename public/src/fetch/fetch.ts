@@ -5,7 +5,6 @@ import isPlainObject from 'lodash/isPlainObject';
 import { IFetchRequest, IFetchInit } from './interfaces';
 import { compile } from 'path-to-regexp';
 import { stringify } from 'query-string';
-
 /**
  * vuex store
  */
@@ -59,9 +58,7 @@ function fetchTimeout(time: number = defaultTimeout): Promise<Response> {
 /**
  * 处理 fetch 参数
  */
-export function fetchParamParser(
-  config: IFetchRequest,
-  init?: IFetchInit
+export function fetchParamParser(config: IFetchRequest,init?: IFetchInit
 ): [string, IFetchInit] {
   let { url, method } = config;
   // 不修改输入的原对象
@@ -89,8 +86,8 @@ export function fetchParamParser(
 
   // query string
   if (['GET', 'DELETE'].includes(method) && init && init.body) {
-    // const query = stringify(init.body);
-    const query = 'xx=2';
+    const query = stringify(Object.assign({},init.body));
+    // const query = 2;
 
     url = url.includes('?') ? `${url}&${query}` : `${url}?${query}`;
   }

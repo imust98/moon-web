@@ -1,54 +1,54 @@
 <template>
   <div class="layout layout-errordetail">
       <section class="error error-topic">
-        <div class="back"><a href="/errorlist">返回</a></div>
+        <div class="back">
+					<router-link class="errorname" :to="{name:'errorlist',query: { appId: '123sdd' }}">
+							返回
+					</router-link>
+				</div>
         <div class="name">
-            <Strong>TypeError</Strong><span>/javascripts/testAnotherError.js in testtest1</span>
+            <Strong>TypeError</Strong><span>{{errordetail.id}}</span>
         </div>
         <div class="num">
             <p>错误数</p>
-            <p>1852</p>
+            <p>{{errordetail.errorNum}}</p>
         </div>
         <div class="time">
             <p>最近时间</p>
-            <p>2018.1.1 22:00</p>
+            <p>{{errordetail.lastShowTime}}</p>
         </div>
       </section>
       <section class="error error-summary">
 				<h4>概要信息</h4>
-				<p>url:  <a href="http://apm-dev.163.com:8183/dist/console/js/moduleConfig/alarmDetail.js">http://apm-dev.163.com:8183/dist/console/js/moduleConfig/alarmDetail.js</a></p>
+				<p>url:  <a href="http://apm-dev.163.com:8183/dist/console/js/moduleConfig/alarmDetail.js">{{errordetail.url}}</a></p>
 				<div class="info">
 					<table>
-						<tr><td>IP</td><td>123.58.160.154</td><td>浏览器</td><td>Chrome</td><td>系统</td><td>Mac OS X</td></tr>
-						<tr><td>版本</td><td>3.2.1</td><td>设备类型</td><td>Computer</td><td>发生时间</td><td>2018.1.1 22：00</td></tr>
+						<tr><td>IP</td><td>{{errordetail.id}}</td><td>浏览器</td><td>{{errordetail.browser}}</td><td>系统</td><td>{{errordetail.system}}</td></tr>
+						<tr><td>版本</td><td>{{errordetail.version}}</td><td>设备类型</td><td>{{errordetail.device}}</td><td>发生时间</td><td>{{errordetail.errorOccurTime}}</td></tr>
 					</table>
 				</div>
       </section>
 			<section class="error error-stack">
 				<h4>错误堆栈</h4>
-				<div><strong>TypeError</strong>b is not defined</div>
+				<div><strong>TypeError </strong>{{errordetail.msg}}</div>
 				<table>
-					<tr><td>at http://apm-dev.163.com:8183/dist/console/js/moduleConfig/alarmDetail.js:85:34</td></tr>
-					<tr><td>at http://apm-dev.163.com:8183/dist/console/js/moduleConfig/alarmDetail.js:85:34</td></tr>
-					<tr><td>at http://apm-dev.163.com:8183/dist/console/js/moduleConfig/alarmDetail.js:85:34</td></tr>
+					<tr v-for="item in errordetail.errorStack" :key="item"><td>{{item}}</td></tr>
 				</table>
 			</section>
 			<section class="error error-behavior">
 				<h4>用户行为</h4>
 				<table>
-					<tr><td>body > input#input1.testInputError[type="text"]</td></tr>
-					<tr><td>level: log      arguments: room.renqiChange,10226</td></tr>
-					<tr><td>level: log      arguments: room.renqiChange,10226</td></tr>
+					<tr v-for="(item,index) in errordetail.userTrack" :key="index"><td>{{item.type | formatBehaviour}}</td><td>{{item | formatValueByType(item.type)}}</td></tr>
 				</table>
 			</section>
 			<section class="error error-ua">
 				<h4>UA</h4>
-				<p>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36</p>
+				<p>{{errordetail.ua}}</p>
 			</section>
 			<div class="pager">
-				 <span>1852/1852</span>
-				 <span><btn>上一页</btn></span>
-				 <span><btn>下一页</btn></span>
+				 <span>{{currentNum}}/{{errordetail.errorNum}}</span>
+				 <span><btn :disabled="currentNum === 1">上一页</btn></span>
+				 <span><btn :disabled="errordetail.errorNum === currentNum">下一页</btn></span>
 			</div>
   </div>
 </template>
@@ -61,7 +61,39 @@ import { Icon, Button as Btn } from 'moon';
     Btn
   }
 })
-export default class ErrorDetail extends Vue {}
+export default class ErrorDetail extends Vue {
+  private stack = [];
+	private currentNum: number = 163;
+	
+  private get appId() {
+    return this.$route.query.appId;
+  }
+  private get params() {
+    return this.$route.params;
+  }
+  private beforeRouteEnter(to: any, from: any, next: any) {
+    next((vm: any) => {
+      vm.fetchDetail();
+    });
+  }
+
+  private beforeRouteUpdate(to: any, from: any, next: any) {
+    this.fetchDetail();
+    next();
+  }
+  private fetchDetail() {
+    this.$store.dispatch('jserror/detailerror', {
+      appId: this.appId,
+      body: {
+        id: this.params.id,
+        errorId: ''
+      }
+    });
+  }
+  private get errordetail() {
+    return this.$store.state.jserror.entry.errordetail;
+  }
+}
 </script>
 <style lang="scss" scoped>
 .error {
@@ -101,9 +133,9 @@ export default class ErrorDetail extends Vue {}
 }
 .pager {
   position: fixed;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   text-align: right;
   padding: 20px 10px;
   bottom: 0px;

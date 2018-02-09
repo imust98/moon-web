@@ -24,7 +24,7 @@
         <nav>
           <ul class="side">
             <li>
-              <router-link class="tab" :to="{name:'errorlist'}">
+              <router-link class="tab" :to="{name:'errorlist',query:{appId:appId}}">
                 <span>JSError分析</span>
               </router-link>
               <ul>
@@ -57,6 +57,7 @@ import '../styles/common.scss';
   }
 })
 export default class App extends Vue {
+  private appId = "1212sdd";
   private handleClick(){
 
   }

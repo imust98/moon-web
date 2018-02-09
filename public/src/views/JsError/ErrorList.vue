@@ -6,8 +6,8 @@
             <Dropdown @on-click="handleClick" placement="bottom-end">
               <a>最近一天</a>
               <DropdownMenu slot="list">
-                  <DropdownItem>1小时</DropdownItem>
-                  <DropdownItem>6小时</DropdownItem>
+                <DropdownItem>1小时</DropdownItem>
+                <DropdownItem>6小时</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -22,7 +22,13 @@
             </tr>
           </template>
           <template slot-scope="props" slot="body">
-            <div></div> 
+            <td :title="props.item.id">
+              <router-link class="errorname" :to="{name:'errordetail',params:{id:123},query: { appId: '123sdd' }}">
+                {{props.item.id}}
+              </router-link>
+              </td>
+            <td :title="props.item.errorNum">{{props.item.errorNum}}</td>
+            <td :title="props.item.lastShowTime">{{props.item.lastShowTime}}</td>
           </template>
         </mo-table>
       </div>
@@ -43,6 +49,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'moon';
+Component.registerHooks(['beforeRouteEnter', 'beforeRouteUpdate']);
 @Component({
   components: {
     Icon,
@@ -55,22 +62,32 @@ import {
   }
 })
 export default class ErrorList extends Vue {
-  private sourcelist = [];
-  private total:number = 12;
-  private pageSize:number = 20;
-  private currentPage:number = 1;
+  private total: number = 12;
+  private pageSize: number = 20;
+  private currentPage: number = 1;
   private handleClick() {}
-  private changePage(){
-
+  private changePage() {}
+  private created() {
+    this.$store.dispatch('jserror/abstructlist', {
+      appId: 'asdfadf12',
+      body: {
+        endTime: 1518141148344,
+        startTime: 1508141148344,
+        limit: 100
+      }
+    });
+  }
+  private get sourcelist() {
+    return this.$store.state.jserror.entry.ablist;
   }
 }
 </script>
 <style lang="scss" scoped>
-.error-list{
+.error-list {
   padding-right: 20px;
 }
-.page{
-  padding:10px;
+.page {
+  padding: 10px;
   text-align: center;
 }
 </style>

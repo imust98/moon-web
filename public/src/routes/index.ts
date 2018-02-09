@@ -18,7 +18,7 @@ const routes: RouteConfig[] = [
     component:ErrorList
   },
   {
-    path: '/errordetail',
+    path: '/errordetail/:id',
     name: 'errordetail',
     meta: {
       title: '错误详情'

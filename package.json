@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run start:dev",
+    "start": "npm run start:dev | npm run start:nei",
     "start:dev": "webpack-dev-server --color --config ./build/webpack.dev.js",
+    "start:nei":"nei server",
     "build": "cross-env NODE_ENV=production webpack  --config ./build/webpack.prod.js",
     "stylelint": "stylelint --config .stylelintrc --syntax scss \"public/**/*.@(vue|scss)\"",
-    "tslint": "tslint ./public/src/**/*.ts"
+    "tslint": "tslint ./public/src/**/*.ts",
+    "nei:build":"nei build -k 5a521f440b88aef909e919e8862bf965",
+    "nei:update":"nei update -k 5a521f440b88aef909e919e8862bf965"
   },
   "repository": {
     "type": "git",
