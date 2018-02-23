@@ -5,6 +5,7 @@ const baseWebpackConfig = require('./webpack.base.js');
 const StylelintPlugin = require('stylelint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = () => {
   return merge(baseWebpackConfig(), {
@@ -27,6 +28,7 @@ module.exports = () => {
       //     'public/**/*.scss'
       //   ]
       // }),
+      new ExtractTextPlugin("styles.css"),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(process.env.NODE_ENV)

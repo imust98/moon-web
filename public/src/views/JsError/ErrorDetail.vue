@@ -45,10 +45,11 @@
 				<h4>UA</h4>
 				<p>{{errordetail.ua}}</p>
 			</section>
+			<Icon type="arrow-up-a" size="32"></Icon>
 			<div class="pager">
 				 <span>{{currentNum}}/{{errordetail.errorNum}}</span>
-				 <span><btn :disabled="currentNum === 1">上一页</btn></span>
-				 <span><btn :disabled="errordetail.errorNum === currentNum">下一页</btn></span>
+				 <span><btn :disabled="currentNum === 1" @click="prevHandle()">上一页</btn></span>
+				 <span><btn :disabled="errordetail.errorNum === currentNum" @click="nextHandle()">下一页</btn></span>
 			</div>
   </div>
 </template>
@@ -58,13 +59,14 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Icon, Button as Btn } from 'moon';
 @Component({
   components: {
-    Btn
+		Btn,
+		Icon
   }
 })
 export default class ErrorDetail extends Vue {
   private stack = [];
-	private currentNum: number = 163;
-	
+  private currentNum: number = 163;
+
   private get appId() {
     return this.$route.query.appId;
   }
@@ -76,22 +78,25 @@ export default class ErrorDetail extends Vue {
       vm.fetchDetail();
     });
   }
-
-  private beforeRouteUpdate(to: any, from: any, next: any) {
-    this.fetchDetail();
-    next();
-  }
-  private fetchDetail() {
+  private fetchDetail(errorId: undefined | string) {
     this.$store.dispatch('jserror/detailerror', {
       appId: this.appId,
       body: {
         id: this.params.id,
-        errorId: ''
+        errorId: errorId || ''
       }
     });
   }
   private get errordetail() {
     return this.$store.state.jserror.entry.errordetail;
+  }
+  private prevHandle() {
+    this.currentNum--;
+    this.fetchDetail(this.errordetail.prevErrorId);
+  }
+  private nextHandle() {
+    this.currentNum++;
+    this.fetchDetail(this.errordetail.nextErrorId);
   }
 }
 </script>

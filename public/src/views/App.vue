@@ -29,7 +29,7 @@
               </router-link>
               <ul>
                 <li>
-                  <router-link class="tab" :to="{name:'errordetail'}">
+                  <router-link class="tab" :to="{name:'errordetail',query:{appId:appId}}">
                     <span>JSError错误明细</span>
                   </router-link>
                 </li>
@@ -49,6 +49,7 @@ import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import { Dropdown, DropdownMenu, DropdownItem } from 'moon';
 import '../styles/common.scss';
+import 'moon/lib/styles/moon.css';
 @Component({
   components:{
     Dropdown,

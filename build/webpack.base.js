@@ -55,6 +55,17 @@ module.exports = () => {
           }
         },
         {
+          //处理js中引入的css
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract({
+            use: [
+              {
+                loader: 'css-loader'
+              }
+            ]
+          })
+        },
+        {
           test: /\.scss$/,
           use:
             process.env.NODE_ENV === 'production'
