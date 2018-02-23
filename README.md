@@ -14,7 +14,7 @@
 
 ```shell
 npm install
-nei build -k 8c22091796974f8b247d452e70532fcb
+nei build -k 5a521f440b88aef909e919e8862bf965
 ```
 
 ### 前端本地开发步骤

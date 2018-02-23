@@ -45,7 +45,6 @@
 				<h4>UA</h4>
 				<p>{{errordetail.ua}}</p>
 			</section>
-			<Icon type="arrow-up-a" size="32"></Icon>
 			<div class="pager">
 				 <span>{{currentNum}}/{{errordetail.errorNum}}</span>
 				 <span><btn :disabled="currentNum === 1" @click="prevHandle()">上一页</btn></span>
